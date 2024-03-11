@@ -25,3 +25,8 @@ fetch("http://localhost:5678/api/works", )
     })
     .catch((err) => console.log(err));
 
+var storageToken = sessionStorage.getItem("tokens");
+
+if (storageToken) {            // Changement contenu du login en logout si token true //
+    loginButton.textContent = "logout";
+    }

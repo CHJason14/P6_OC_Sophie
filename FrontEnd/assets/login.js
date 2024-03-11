@@ -1,32 +1,43 @@
-const token = 0;
 var email=document.getElementById('email');
 var pwd=document.getElementById('pwd');
-
 var form=document.getElementById('form-login')
 
-form.addEventListener('submit', (e) => {
+form.addEventListener('submit', (e) => {            // évenenement au clique du bouton envoyer //
  e.preventDefault()
 
-email = email.value;
-pwd = pwd.value;
-const connect = {
-  "email": email,
-  "password": pwd,
-};
-console.log(test);
+  emailcontent = email.value;            // Récupération adresse mail //
+  pwdcontent = pwd.value;            // récupération mot de passe //
 
-fetch('http://localhost:5678/api/users/login', {
-  headers: {
-    'Accept': 'application/json',
-    'Content-Type': 'application/json'
-  },
-  method: "POST",
-  body : JSON.stringify(connect),
-})
+  const connect = {            // Création du body a post //
+    email: emailcontent,
+    password: pwdcontent,
+  }
+
+  console.log(connect);
+  
+    fetch('http://localhost:5678/api/users/login', {
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "http://localhost:5678",
+      },
+      mode : "cors",
+      method: "POST",
+      body : JSON.stringify(connect),
+  })
   .then((res) => {
   return res.json();
-  console.log(res);
   })
-  .catch((err) => console.log(err));;
+  .then((login) => {
+    var token = login.token;            // Récupération du token //
+    sessionStorage.setItem("tokens",token);            // Stockage du token dans la session //
+    var storageToken = sessionStorage.getItem("tokens");            // Renvoie page d'acceuil si connexion reussit //
+    if (storageToken) {
+      document.location.href=".//index.html";
+    };
+  })
+  .catch((err) => console.log(err));
 
+
+ 
 })
+
