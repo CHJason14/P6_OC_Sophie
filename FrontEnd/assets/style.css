@@ -143,6 +143,10 @@ input {
 	font-size: 14px;
 }
 
+main {
+	position: relative;
+}
+
 header {
 	display: flex;
 	justify-content: space-between;
@@ -220,8 +224,140 @@ li:hover {
 }
 
 #portfolio h2 {
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	text-align: center;
 	margin-bottom: 1em;
+}
+
+#portfolio span {
+	color: #000000;
+	font-size: 14px;
+	text-align: center;
+	margin: 0 10px;
+}
+
+/* Ajout de l'icone avant modifier  */
+#portfolio span:before {
+	font-family: "Font Awesome 5 Free";
+	font-weight: 300;
+	content: "\f044";
+	margin: 0 5px;
+}
+
+#portfolio span:hover {
+	cursor: pointer;
+}
+
+.modifyContainer {
+	position: absolute;
+	width: 630px;
+	height: 688px;
+	background-color: white;
+	border-radius: 10px;
+	transform: translateX(-50%);
+	top: 0px;
+	left: 50%;
+}
+
+.xMarker:after {
+	position: absolute;
+	top: 26px;
+	right: 30px;
+	font-family: "Font Awesome 5 Free";
+	font-weight: 300;
+	content: "\58";
+}
+
+.modifyContainer .removeContainer {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	margin: 60px 100px;
+}
+
+.removeContainer h2 {
+	font-size: 26px;
+	font-weight: 400;
+	color: #000000;
+}
+
+.removeContainer .figureContainer {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: flex-start;
+	margin: 46px auto 0 auto;
+}
+
+.figureContainer figure {
+	position: relative;
+	margin-right: 9px;
+	margin-bottom: 29px;
+}
+
+.figureContainer figure img {
+	width: 100%;
+	height: 102px;
+}
+
+.figureContainer span {
+	position: absolute;
+	width: 17px;
+	height: 17px;
+	background-color: #000000;
+	top: 6px;
+	left: 55px;
+}
+
+.figureContainer span:after {
+	font-family: "Font Awesome 5 Free";
+	font-weight: 00;
+	content: "\f2ed";
+	color: white;
+	font-size: 11px;
+	height: 17px;
+	display: flex;
+	justify-content: center;
+	margin-top: 3px;
+}
+
+.figureContainer span:hover {
+	cursor: pointer;
+}
+
+.modifyContainer .bar {
+	position: absolute;
+	bottom: 119px;
+	border: 1px solid #B3B3B3;
+	width: 420px;
+	left: 50%;
+	transform: translateX(-50%);
+}
+
+.modifyContainer .addWork {
+	font-family: 'Syne';
+	position: absolute;
+	bottom: 45px;
+	color: white;
+	font-size: 14px;
+	font-weight: 700;
+	text-align: center;
+	width: 237px;
+	padding: 10px;
+	border-radius: 60px;
+	background-color: #1D6154;
+	left: 50%;
+	transform: translateX(-50%);
+}
+
+.modifyContainer .addWork:hover {
+	cursor: pointer;
+}
+
+.backgroundCover {
+	background: #0000004D;
 }
 
 /* CSS BOUTTONS FILTRES  */

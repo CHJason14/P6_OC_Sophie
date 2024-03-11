@@ -1,9 +1,4 @@
-fetch("http://localhost:5678/api/categories", )
-    .then((res) => res.json ())
-    .then ((data) => console.log(data))
-    .catch((err) => console.log(err));
-
-    const figureContainer = document.querySelector(".gallery");                 // Selection de la classe gallery //
+const figureContainer = document.querySelector(".gallery");                 // Selection de la classe gallery //
 
 fetch("http://localhost:5678/api/works", )
     .then((res) => {
@@ -24,9 +19,3 @@ fetch("http://localhost:5678/api/works", )
         }
     })
     .catch((err) => console.log(err));
-
-var storageToken = sessionStorage.getItem("tokens");
-
-if (storageToken) {            // Changement contenu du login en logout si token true //
-    loginButton.textContent = "logout";
-    }
