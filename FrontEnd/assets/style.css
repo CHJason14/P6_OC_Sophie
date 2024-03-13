@@ -270,6 +270,24 @@ li:hover {
 	content: "\58";
 }
 
+.backMarker:after {
+	position: absolute;
+	top: 26px;
+	left: 30px;
+	size: 21px;
+	font-family: "Font Awesome 5 Free";
+	font-weight: 600;
+	content: "\f060";
+}
+
+.xMarker:hover {
+	cursor: pointer;
+}
+
+.backMarker:hover {
+	cursor: pointer;
+}
+
 .modifyContainer .removeContainer {
 	display: flex;
 	flex-direction: column;
@@ -278,10 +296,113 @@ li:hover {
 	margin: 60px 100px;
 }
 
-.removeContainer h2 {
+.modifyContainer .addContainer {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	margin: 60px 100px;
+}
+
+.modifyContainer h2 {
 	font-size: 26px;
 	font-weight: 400;
 	color: #000000;
+}
+
+.modifyContainer .imgAddContainer {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-evenly;
+	background: #E8F1F6;
+	border-radius: 3px;
+	height: 169px;
+	width: 420px;
+	margin: 30px 0;
+	font-family: 'Work Sans';
+}
+
+.imgAddContainer .logoContainer:after {
+	font-size: 68px;
+	color: #B9C5CC;
+	font-family: "Font Awesome 5 Free";
+	font-weight: 300;
+	content: "\f03e";
+}
+
+.imgAddContainer .buttonImgContainer {
+	font-size: 14px;
+	font-weight: 500;
+	text-align: center;
+	padding: 10px 0;
+	background: #CBD6DC;
+	border-radius: 50px;
+	width: 173px;
+}
+
+.buttonImgContainer:hover {
+	cursor: pointer;
+}
+
+.imgAddContainer .infoImgAdd {
+	font-size: 10px;
+	font-weight: 400;
+	text-align: center;
+}
+
+.addContainer .titleContainer {
+	width: 100%;
+}
+
+.titleContainer .boxTitle {
+	font-family: 'Work Sans';
+	font-size: 14px;
+	font-weight: 500;
+	color: #3D3D3D;
+	margin: 10px 0;
+}
+
+.titleContainer .boxInput {
+	width: 100%;
+	box-shadow: 0px 4px 14px 0px #00000017;
+	border: none;
+	height: 51px;
+	margin: 10px 0;
+}
+
+.buttonImgInput {
+	display: none;
+}
+
+.imagePreview {
+	width: 129px;
+	height: 169px;
+}
+
+.textAlign {
+	text-align: center;
+}
+
+.modifyContainer input[type=submit] {
+	font-family: 'Syne';
+	position: absolute;
+	bottom: 10px;
+	color: white;
+	font-size: 14px;
+	font-weight: 700;
+	text-align: center;
+	width: 237px;
+	padding: 10px;
+	border-radius: 60px;
+	border: none;
+	background-color: #A7A7A7;
+	left: 50%;
+	transform: translateX(-50%);
+}
+
+.modifyContainer input[type=submit]:hover {
+	cursor: pointer;
 }
 
 .removeContainer .figureContainer {
