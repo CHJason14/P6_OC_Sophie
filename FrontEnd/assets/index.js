@@ -9,6 +9,7 @@ fetch("http://localhost:5678/api/works", )
             const figureElement = document.createElement("figure");                 // Création d'une balise figure //
             figureContainer.appendChild(figureElement);                         // Enfant de .gallery //
             figureElement.classList.add("figurecard");                          // Ajout class figurecard a chaque figure //
+            figureElement.id = work.id;
             var imagejavascript = document.createElement("img");
             imagejavascript.src = work.imageUrl;
             imagejavascript.alt = work.title;

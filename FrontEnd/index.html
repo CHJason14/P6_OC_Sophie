@@ -61,6 +61,41 @@
 			<input type="submit" value="Envoyer">
 		</form>
 	</section>
+	<section class="removeBox modifyContainer displayNone"">
+        <span class="xMarker"></span>
+        <div class="removeContainer">
+                <h2>Galerie photo</h2>
+                <div class="figureContainer">
+                </div>
+        </div>
+        <span class="bar"></span>
+        <p class="addWork">Ajouter une photo</p>
+	</section>
+	<section class="addBox modifyContainer displayNone" ">
+        <span class="xMarker"></span>
+        <span class="bar"></span>
+        <div class="addContainer">
+            <h2>Ajout photo</h2>
+        	<form id="formAddWork" enctype="multipart/form-data" method="post">
+                <div class="imgAddContainer">
+                        <span class="logoContainer"></span>
+                        <label class="buttonImgContainer" for="imgSend">+ Ajouter photo</label>
+                        <input type="file" accept=".jpg, .png" name="image" id="imgSend" class="buttonImgInput">
+                        <p class="infoImgAdd">jpg, png : 4mo max</p>
+						<div class="imgPreview"></div>
+				</div>
+        		<div class="titleContainer">
+                	<p class="boxTitle">Titre</p>
+                	<input type="text" id="title" name="title" class="boxInput">
+                	<label for="categories"><p class="boxTitle">Catégorie</p></label>
+                	<select id="categories">
+                	</select>
+        		</div>
+                <input id="submit" type="submit" value="Valider" disabled="true">
+       		</form>
+		</div>
+<span class="backMarker"></span>
+</section>
 </main>
 
 <footer>

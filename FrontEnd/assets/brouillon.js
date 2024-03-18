@@ -23,7 +23,7 @@ Form submission canceled because the form is not connected
  deleteButton.addEventListener('click', (e) => {
     fetch('http://localhost:5678/api/works', {
             headers: {"Authorization": 'Bearer ' + storageToken,
-                    "Content-Type": "multipart/form-data", 
+                    "Content-Type": "multipart/form-data",
                     "Access-Control-Allow-Origin": "http://localhost:5678",
                     },
             mode : "cors",

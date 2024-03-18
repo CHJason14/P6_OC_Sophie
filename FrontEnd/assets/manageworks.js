@@ -1,33 +1,20 @@
 const modifyButton = document.querySelector("#portfolio > h2 > span"); 
 
 let pageYOffset = 0;
-    
+    /* ******************************************************* Fonction suppression ********************************************** */
     function deleteContainer(e) {                                                                                           // SUPPRESSION DE PROJET //
-        const modifyContainer = document.createElement("section");                           // Création de la box de modification //
-        mainContainer.appendChild(modifyContainer);
-        modifyContainer.classList.add("modifyContainer");                           // Ajout de la classe sur la box //
         bodyContainer.classList.add("backgroundCover");                           // Ajout de la classe sur le background //
-        
-        const modifyContent = document.querySelector(".modifyContainer");                 // Selection de la box //
-        var pageYOffset = e.view.pageYOffset;                              // Ajout des PX top défilé avant de cliquer sur le bouton modifier //
-        modifyContent.style.top = pageYOffset + "px";
-        
-        const xMarker = document.createElement("span");                 // Création de la croix //
-        modifyContainer.appendChild(xMarker);
-        xMarker.classList.add("xMarker");
 
-        var removeWorksContainer = document.createElement ("div");                 // Création d'une div avec le contenu pour supprimé des elements //
-        modifyContainer.appendChild(removeWorksContainer);
-        removeWorksContainer.classList.add("removeContainer");
+        const removeBox = document.querySelector(".removeBox");
+        removeBox.classList.remove("displayNone");
 
-        const titleRemoveWorks = document.createElement ("h2");                 // Création du titre "Galerie Photo" //
-        removeWorksContainer.appendChild(titleRemoveWorks);
-        titleRemoveWorks.innerHTML = "Galerie photo";
+        let worksContainer = document.querySelector(".figureContainer");
+        var child  = worksContainer.firstChild;
 
-        const worksContainer = document.createElement ("div");                  // Création de la box avec les projets //
-        removeWorksContainer.appendChild(worksContainer);
-        worksContainer.classList.add("figureContainer");
-
+        while (child) {
+            worksContainer.removeChild(child);
+            child = worksContainer.firstChild;
+        }
 
         fetch("http://localhost:5678/api/works", )                  // Affichage des projets en ligne //
             .then((res) => {
@@ -45,39 +32,36 @@ let pageYOffset = 0;
                     figureElement.appendChild(deleteButton);
                     deleteButton.classList.add("deleteWork");
                     deleteButton.id = work.id;
+                    const idSelected = deleteButton.id;
+                    deleteButton.addEventListener('click' , (e) => {                  // Suppression des projets au clic //
+                        console.log(deleteButton.id);
+                        fetch('http://localhost:5678/api/works/' + deleteButton.id, {
+                        headers: {"Authorization": 'Bearer ' + storageToken,
+                            },
+                        mode : "cors",
+                        method: "DELETE",
+                    });
+                    const figureMainElement = document.querySelector(".gallery");
+                    const figureMainIdToDelete = figureMainElement.getElementById(2);
+                    figureMainIdToDelete.remove();
+                    figureElement.remove();                  // Suppression de la classe figure pour l'affichage //
+                    });
                 }
             });
         
-            var deleteButton = document.getElementsByClassName('deleteWork');
-            console.log(deleteButton);
-
-            for (var i = 0 ; i < deleteButton.length; i++) {
-                deleteButton.item(i).addEventListener('click' , (e) => {
-                    console.log("click");
-                }); 
-                console.log("click");
-             };
-
-
-        const bar = document.createElement ("span");                  // Création de labarre de séparation //
-        modifyContainer.appendChild(bar);
-        bar.classList.add("bar");
-
+        const xMarker = document.querySelector(".removeBox > .xMarker");
         xMarker.addEventListener('click', (e) => {                           // Action sur la croix pour fermer la box de modification //
-            modifyContainer.remove();
+            removeBox.classList.add("displayNone");
             bodyContainer.classList.remove("backgroundCover");
         });
 
-        
-        const addWork = document.createElement ("p");                  // Création du bouton ajouter une photo //
-        worksContainer.appendChild(addWork);
-        addWork.innerHTML = "Ajouter une photo";
-        addWork.classList.add("addWork");
+        let pageYOffset = e.view.pageYOffset;                              // Ajout des PX top défilé avant de cliquer sur le bouton modifier //
+        removeBox.style.top = pageYOffset + "px";
 
         let lastscroll = 0                            // Ajout de l'effet au scroll de la box //
         addEventListener("scroll", (e) => {
             lastscroll = window.scrollY;
-            modifyContent.style.top = lastscroll + "px";
+            removeBox.style.top = lastscroll + "px";
         });
 
         const addButton = document.querySelector(".addWork");
@@ -88,70 +72,34 @@ let pageYOffset = 0;
     modifyButton.addEventListener('click', deleteContainer) ;
                                                                                                   // AJOUT DE PROJET //
         function removeContainer() { 
-            var removeWorksContainer = document.querySelector(".removeContainer");                                                              // fonction ajout de projet //
-            removeWorksContainer.remove();
-        
-            const modifyContainer = document.querySelector(".modifyContainer");
-            addWorksContainer = document.createElement ("div");                 // Création d'une div avec le contenu pour supprimé des elements //
-            modifyContainer.appendChild(addWorksContainer);
-            addWorksContainer.classList.add("addContainer");
+            const removeBox = document.querySelector(".removeBox");
+            removeBox.classList.add("displayNone");
+            const addBox = document.querySelector(".addBox");
+            addBox.classList.remove("displayNone");
 
-            const titleRemoveWorks = document.createElement ("h2");                 // Création du titre "Galerie Photo" //
-            addWorksContainer.appendChild(titleRemoveWorks);
-            titleRemoveWorks.innerHTML = "Ajout photo";
 
-            const backMarker = document.createElement("span");                 // Création de la flèche back//
-            modifyContainer.appendChild(backMarker);
-            backMarker.classList.add("backMarker");
+            const backMarker = document.querySelector(".backMarker");
 
-            backMarker.addEventListener("click", (e) => {                 // Action sur l'evenement du click back //
-                modifyContainer.remove();
-                deleteContainer(e);
+            backMarker.addEventListener("click", deleteContainer);
+
+            backMarker.addEventListener("click", (e) => {
+                addBox.classList.add("displayNone");
+            })
+
+            const xMarker2 = document.querySelector(".addBox > .xMarker");
+
+            xMarker2.addEventListener('click', (e) => {                           // Action sur la croix pour fermer la box de modification //
+                addBox.classList.add("displayNone");
+                bodyContainer.classList.remove("backgroundCover");
             });
 
-            const formContainer = document.createElement ("form");
-            addWorksContainer.appendChild(formContainer);
-            formContainer.id = "formAddWork";
+            let lastscroll = 0                            // Ajout de l'effet au scroll de la box //
+            addEventListener("scroll", (e) => {
+            lastscroll = window.scrollY;
+            addBox.style.top = lastscroll + "px";
+            });
 
-            const imgAddContainer = document.createElement ("div");                 // Ajout de la boite pour l'image// 
-            formContainer.appendChild(imgAddContainer);
-            imgAddContainer.classList.add("imgAddContainer");
-
-            const logoImgContainer = document.createElement ("span");                 // Ajout du logo image // 
-            imgAddContainer.appendChild(logoImgContainer);
-            logoImgContainer.classList.add("logoContainer");
-
-            const buttonImgContainer = document.createElement ("label");                 // Ajout du bouton pour ajouter la photo // 
-            imgAddContainer.appendChild(buttonImgContainer);
-            buttonImgContainer.classList.add("buttonImgContainer");
-            buttonImgContainer.setAttribute("for","imgSend");
-            buttonImgContainer.innerHTML = "+ Ajouter photo";
-            const buttonImgInput = document.createElement ("input");                 // Ajout du bouton hidden lié au label // 
-            imgAddContainer.appendChild(buttonImgInput);                 // Ajout de l'input image// 
-            buttonImgInput.type = "file";
-            buttonImgInput.accept = ".jpg, .png";
-            buttonImgInput.name = "image";
-            buttonImgInput.id = "imgSend";
-            buttonImgInput.classList.add("buttonImgInput");
-
-            const infoImgAdd = document.createElement ("p");                 // Ajout des restrictions du fichier envoyé // 
-            imgAddContainer.appendChild(infoImgAdd);
-            infoImgAdd.classList.add("infoImgAdd");
-            infoImgAdd.innerHTML = "jpg, png : 4mo max";
-
-            var imgPreview = document.createElement("div");
-            imgAddContainer.appendChild(imgPreview);
-
-            var fileTypes = ["image/jpeg", "image/png"];                 // Fonction de vérification de type de fichier //
-            function validFileType(file) {
-                for (var i = 0; i < fileTypes.length; i++) {
-                    if (file.type === fileTypes[i]) {
-                        return true;
-                    }
-                };
-
-                return false;
-            };
+            const imgPreview = document.querySelector(".imgPreview");
 
             function returnFileSize(number) {                 // Fonction de vérification du poids du fichier //
                 if (number < 4194304) {
@@ -161,22 +109,38 @@ let pageYOffset = 0;
                 }
             };
 
-            var nameimg = 0;
-            var typeimg = 0;
+
+            const logoImgContainer = document.querySelector(".logoContainer");
+            const buttonImgContainer = document.querySelector(".buttonImgContainer");
+            const infoImgAdd = document.querySelector(".infoImgAdd");
+            const buttonImgInput = document.querySelector(".buttonImgInput");
+            logoImgContainer.classList.remove("displayNone");
+            buttonImgContainer.classList.remove("displayNone");
+            infoImgAdd.classList.remove("displayNone");
+            let imgPreviewChild = imgPreview.firstChild;
+            while (imgPreviewChild) {                 // reset de la div //
+                imgPreview.removeChild(imgPreviewChild);
+                imgPreviewChild = imgPreview.firstChild;
+            };
+
+            let imgName = 0;
             function updateImageSend() {                 // fonction ajout de la preview de l'image //
-                while (imgPreview.firstChild) {                 // reset de la div //
-                    imgPreview.removeChild(imgPreview.firstChild);
-                }
-                  
-                var curFiles = buttonImgInput.files;
+                
+                imgPreviewChild = imgPreview.firstChild;
+                while (imgPreviewChild) {                 // reset de la div //
+                    imgPreview.removeChild(imgPreviewChild);
+                    imgPreviewChild = imgPreview.firstChild;
+                };
+
+                let curFiles = buttonImgInput.files;
                     if (curFiles.length > 0) {                 // Vérification de fichier séléctionner //
-                      var list = document.createElement("ol");
+                      let list = document.createElement("ol");
                       imgPreview.appendChild(list);
-                      for (var i = 0; i < curFiles.length; i++) {
-                        var listItem = document.createElement("li");
-                        var para = document.createElement("p");
-                        if (validFileType(curFiles[i]) && returnFileSize(curFiles[i].size)) {
-                          var image = document.createElement("img");
+                      for (let i = 0; i < curFiles.length; i++) {
+                        let listItem = document.createElement("li");
+                        let para = document.createElement("p");
+                        if (returnFileSize(curFiles[i].size)) {
+                          let image = document.createElement("img");
                           image.src = window.URL.createObjectURL(curFiles[i]);
                           image.classList.add("imagePreview");
                           listItem.classList.add("imagePreview");
@@ -186,16 +150,15 @@ let pageYOffset = 0;
                           para.textContent =
                             "Le fichier " +
                             curFiles[i].name +
-                            ": N'est pas valide ou est trop volumineux";
+                            ": est trop volumineux";
                           listItem.appendChild(para);
                           para.classList.add("textAlign");
                         }
                         list.appendChild(listItem);
-                        nameimg = (curFiles[i].name);
-                        typeimg = (curFiles[i].type);
-                        logoImgContainer.remove();
-                        buttonImgContainer.remove();
-                        infoImgAdd.remove();
+                        imgName = document.getElementById("imgSend").files[0].name;
+                        logoImgContainer.classList.add("displayNone");
+                        buttonImgContainer.classList.add("displayNone");
+                        infoImgAdd.classList.add("displayNone");
                       }
                     }
                   };
@@ -203,42 +166,14 @@ let pageYOffset = 0;
                   
                 buttonImgInput.addEventListener("change", updateImageSend);                 // Appel de la fonction à l'envoie du fichier // 
 
-            const titleContainer = document.createElement ("div");                 // Ajout de la boite pour le titre // 
-            formContainer.appendChild(titleContainer);
-            titleContainer.classList.add("titleContainer");
+            const dataCategoriesList = document.getElementById("categories");
 
-            const boxTitle = document.createElement ("p");                 // Ajout d'un texte pour le titre de la boite' // 
-            titleContainer.appendChild(boxTitle);
-            boxTitle.classList.add("boxTitle");
-            boxTitle.innerHTML = "Titre";
+            let child  = dataCategoriesList.firstChild;
 
-            const boxInput = document.createElement ("input");                 // Ajout d'un input dans la boite' // 
-            titleContainer.appendChild(boxInput);
-            boxInput.type = "text";
-            boxInput.id = "title";
-            boxInput.name = "title";
-            boxInput.classList.add("boxInput");;
-
-            const boxTitle2 = document.createElement ("p");                 // Ajout d'un texte pour le titre de la boite' // 
-            titleContainer.appendChild(boxTitle2);
-            boxTitle2.classList.add("boxTitle");
-            boxTitle2.innerHTML = "Catégorie";
-
-            const boxInput2 = document.createElement ("input");                 // Ajout d'un input dans la boite' // 
-            titleContainer.appendChild(boxInput2);
-            boxInput2.id = "category";
-            boxInput2.name = "category";
-            boxInput2.classList.add("boxInput");
-
-            const validateButton = document.createElement ("input");                  // Création du bouton valider //
-            formContainer.appendChild(validateButton);
-            validateButton.value = "Valider";
-            validateButton.type = "submit";
-            validateButton.disabled = true;                         // Désactivation du bouton submit //
-
-            const dataCategoriesList = document.createElement ("datalist");                   // Création DATA liste //
-            titleContainer.appendChild(dataCategoriesList);
-            dataCategoriesList.id = "categories";
+            while (child) {
+                dataCategoriesList.removeChild(child);
+                child = dataCategoriesList.firstChild;
+            }
 
             fetch("http://localhost:5678/api/categories", )                         // Récupération des catégories sur l'API //
             .then((res) => {
@@ -250,76 +185,65 @@ let pageYOffset = 0;
                     dataCategoriesList.appendChild(categoryValue);
                     categoryValue.value = category.name;
                     categoryValue.id = category.id;
+                    categoryValue.textContent = category.name;
             }
             });
 
-            boxInput2.setAttribute('list','categories');                         // Attribution de la data list a l'input //
+            const boxInput = document.getElementById("title");
+            const boxInput2 = document.getElementById("categories");
+            let categoryIdSelected = 0;                         // récupération de l'ID de la catégorie séléctionné //
 
-            var categoryIdSelected = 0;                         // récupération de l'ID de la catégorie séléctionné //
-            const text = document.getElementById('category')
             boxInput2.addEventListener('input', () => {
                 const index = [... dataCategoriesList.options]
                   .map(o => o.value)
-                  .indexOf(text.value)
+                  .indexOf(boxInput2.value)
                   categoryIdSelected = dataCategoriesList.options[index].id;
+                  categoryIdSelected = parseInt(categoryIdSelected);
             });
 
             setInterval(canSubmit, 1000);                         // Boucle fonction toutes les secondes //
 
-            const formElement = document.getElementById("formAddWork");
-            var formData = new FormData();
-
-            const textToBinary = (str = '') => {
-                let res = '';
-                res = str.split('').map(char => {
-                   return char.charCodeAt(0).toString(2);
-                }).join(' ');
-                return res;
-             };
-
+            const validateButton = document.getElementById("submit");
             function canSubmit() {                         // Vérification si les champs sont remplis //
-                if (boxInput.value && boxInput2.value && nameimg){
+                if (boxInput.value && boxInput2.value && imgName){
                     validateButton.style.backgroundColor = "#1D6154";
-                    var binaryImg = textToBinary(nameimg);
                     validateButton.disabled = false;                         // Activation du bouton submit //
-                    formData = new FormData(formElement);
-                    formData.set("image", binaryImg);
-                    formData.set("category", categoryIdSelected);
+                    console.log(imgName);
                     console.log(boxInput.value);
                     console.log(categoryIdSelected);
-                    console.log(binaryImg);
                 }
             };
             
             boxInput.addEventListener("click", canSubmit);                         // Lancement de la fonction //
 
-
-
             function submitFormReturn(e) {
-                modifyContainer.remove();
+                addBox.classList.add("displayNone");
                 clearInterval(canSubmit);
                 bodyContainer.classList.remove("backgroundCover");
              };
 
-             var storageToken = sessionStorage.getItem("tokens"); 
-             formContainer.onsubmit = async (e) => {
+            let formData = new FormData();
+
+            const formContainer = document.getElementById("formAddWork");
+            let storageToken = sessionStorage.getItem("tokens"); 
+            formContainer.addEventListener("submit", (e) => {
                 submitFormReturn();
                 e.preventDefault();
+                clearInterval(canSubmit);
+                formData.append("image", imgName);
+                formData.append("title", boxInput.value);
+                formData.append("category", categoryIdSelected);
             
-                let response = await fetch('http://localhost:5678/api/works', {
+                fetch('http://localhost:5678/api/works', {
                     headers: {"Authorization": 'Bearer ' + storageToken,
-                            "Content-Type": "multipart/form-data", 
-                            "Access-Control-Allow-Origin": "http://localhost:5678",
+                            "Content-Type": "multipart/form-data",
                             },
-                    mode : "cors",
                     method: "POST",
                     body : formData, 
-                });
-            
-                let result = response;
-                console.log(...formData);
-
-                clearInterval(canSubmit);
-                alert("Projet ajouté avec succès !");
-              };
+                })
+                .then ((res) =>
+                alert("Projet ajouté avec succès !")
+                );
+            console.log(...formData);
+            });
         };

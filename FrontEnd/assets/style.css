@@ -250,6 +250,10 @@ li:hover {
 	cursor: pointer;
 }
 
+.displayNone {
+	display: none;
+}
+
 .modifyContainer {
 	position: absolute;
 	width: 630px;
@@ -302,6 +306,14 @@ li:hover {
 	align-items: center;
 	justify-content: center;
 	margin: 60px 100px;
+}
+
+.addContainer select {
+	width: 100%;
+	box-shadow: 0px 4px 14px 0px #00000017;
+	border: none;
+	height: 51px;
+	margin: 10px 0;
 }
 
 .modifyContainer h2 {

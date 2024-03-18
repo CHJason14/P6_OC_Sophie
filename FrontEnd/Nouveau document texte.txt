@@ -1,0 +1,6 @@
+selected au lieu de datalist pour les catégories
+https://www.w3schools.com/tags/tryit.asp?filename=tryhtml_option_selected
+
+document.getElementById("file-id").files[0].name; 
+
+imgToSend.files[0].name
